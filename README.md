@@ -7,7 +7,7 @@
 [![NumPy](https://img.shields.io/badge/NumPy-Mathematics-013243?logo=numpy&logoColor=white)](https://numpy.org/)
 [![Kaggle](https://img.shields.io/badge/Kaggle-Model_Training-20BEFF?logo=kaggle&logoColor=white)](https://www.kaggle.com/)
 
-This repository documents the final and most advanced phase of the Reinforcement Learning journey: training a 4-legged, 8-joint robot (Ant) to navigate a 3D environment[cite: 74, 75]. To solve this complex high-dimensional continuous control task, the **Soft Actor-Critic (SAC)** algorithm was employed due to its exceptional sample efficiency[cite: 74].
+This repository documents the final and most advanced phase of the Reinforcement Learning journey: training a 4-legged, 8-joint robot (Ant) to navigate a 3D environment. To solve this complex high-dimensional continuous control task, the **Soft Actor-Critic (SAC)** algorithm was employed due to its exceptional sample efficiency.
 
 ---
 
@@ -21,22 +21,22 @@ This repository documents the final and most advanced phase of the Reinforcement
 Transitioning from 2D planes to 3D spaces required a deep understanding of complex physics and rigorous performance monitoring:
 
 ### Phase 1: 3D Environment Anatomy 
-- **Description:** Deconstructing the physical properties and the 3D sensory inputs of the Ant[cite: 74].
-- **Action Space:** 8-dimensional continuous space controlling the motors of all 4 legs (moving them forward, backward, up, and down) with torque limits of [-1, 1][cite: 74, 75].
-- **Observation Space:** 27-dimensional vector[cite: 75]. To accurately represent 3D rotation (Roll, Pitch, Yaw), the environment feeds the neural network **Quaternions** rather than simple angles[cite: 75]. Absolute positional coordinates were explicitly excluded to maintain Spatial Independence[cite: 75].
-- **Termination:** The environment terminates if the Ant flips over (Z-height < 0.2m) or jumps erratically (Z-height > 1.0m)[cite: 76].
+- **Description:** Deconstructing the physical properties and the 3D sensory inputs of the Ant.
+- **Action Space:** 8-dimensional continuous space controlling the motors of all 4 legs (moving them forward, backward, up, and down) with torque limits of.
+- **Observation Space:** 27-dimensional vector. To accurately represent 3D rotation (Roll, Pitch, Yaw), the environment feeds the neural network **Quaternions** rather than simple angles. Absolute positional coordinates were explicitly excluded to maintain Spatial Independence.
+- **Termination:** The environment terminates if the Ant flips over (Z-height < 0.2m) or jumps erratically (Z-height > 1.0m).
 
 ### Phase 2: Complex Reward Engineering
-- **Description:** Balancing speed with mechanical safety using a 4-part hybrid reward equation[cite: 76].
-- **The Equation:** `Reward = Forward Velocity + Healthy Reward (+1) - Control Cost - Contact Cost`[cite: 76].
-- **Techniques Used:** Unlike previous environments, the Ant is heavily penalized (`Contact Cost`) if it slams its mechanical feet too violently into the ground, forcing the SAC algorithm to discover an elegant and energy-efficient walking gait[cite: 76].
+- **Description:** Balancing speed with mechanical safety using a 4-part hybrid reward equation.
+- **The Equation:** `Reward = Forward Velocity + Healthy Reward (+1) - Control Cost - Contact Cost`.
+- **Techniques Used:** Unlike previous environments, the Ant is heavily penalized (`Contact Cost`) if it slams its mechanical feet too violently into the ground, forcing the SAC algorithm to discover an elegant and energy-efficient walking gait.
 
 ### Phase 3: Production Training & Log Monitoring
-- **Description:** Training the agent for 1,000,000 steps and visualizing its learning progression[cite: 76, 77].
+- **Description:** Training the agent for 1,000,000 steps and visualizing its learning progression.
 - **Techniques Used:**
-  * Utilizing an enormous Replay Buffer (`1,000,000`) and random warm-up steps (`learning_starts=10000`) for SAC[cite: 77, 78].
-  * Wrapping the environment with the `Monitor` wrapper to automatically log episode rewards, lengths, and times into a CSV file without manual intervention[cite: 77].
-  * Designing a custom Python script to parse the `monitor.csv` and plot a **Rolling Average (window=100)**, effectively smoothing out the high-variance noise typical of SAC training to reveal the true learning breakthrough[cite: 78, 79].
+  * Utilizing an enormous Replay Buffer (`1,000,000`) and random warm-up steps (`learning_starts=10000`) for SAC.
+  * Wrapping the environment with the `Monitor` wrapper to automatically log episode rewards, lengths, and times into a CSV file without manual intervention.
+  * Designing a custom Python script to parse the `monitor.csv` and plot a **Rolling Average (window=100)**, effectively smoothing out the high-variance noise typical of SAC training to reveal the true learning breakthrough.
 
 ---
 
@@ -44,10 +44,10 @@ Transitioning from 2D planes to 3D spaces required a deep understanding of compl
 
 ## 🧠 Core Concepts Explored
 
-- **Soft Actor-Critic (SAC) in 3D:** Leveraging off-policy reinforcement learning to conquer 8 degrees of freedom in a 3D space[cite: 74].
-- **Quaternions for AI:** Feeding continuous 3D rotational matrices (Quaternions) to Neural Networks instead of Euler angles to avoid gimbal lock[cite: 75].
-- **Contact Costs:** Adding physical wear-and-tear constraints to the reward function to bridge the gap between simulation and real-world robotics (Sim2Real)[cite: 76].
-- **Rolling Average Visualization:** Transforming noisy step-by-step logs into smoothed, professional learning curves using Pandas and Seaborn[cite: 78].
+- **Soft Actor-Critic (SAC) in 3D:** Leveraging off-policy reinforcement learning to conquer 8 degrees of freedom in a 3D space.
+- **Quaternions for AI:** Feeding continuous 3D rotational matrices (Quaternions) to Neural Networks instead of Euler angles to avoid gimbal lock.
+- **Contact Costs:** Adding physical wear-and-tear constraints to the reward function to bridge the gap between simulation and real-world robotics (Sim2Real).
+- **Rolling Average Visualization:** Transforming noisy step-by-step logs into smoothed, professional learning curves using Pandas and Seaborn.
 
 ---
 
